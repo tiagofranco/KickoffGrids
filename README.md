@@ -1,4 +1,4 @@
 KickoffGrids
 ===========
 
-A minimal, responsive, Sass powered grid system.
+A minimal, responsive, Sass and Bourbon powered grid system.

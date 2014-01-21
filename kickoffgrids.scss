@@ -1,0 +1,133 @@
+// GRID VARIABLES
+// Costumize yours, based on your projects needs
+$cols : 12;
+$gap  : 20px;
+
+// BREAKPOINTS
+$xxs  : 320px;
+$xs   : 480px;
+$s    : 640px;
+$m    : 800px;
+$l    : 1000px;
+$xl   : 1100px;
+
+.row {
+  @include clearfix;
+  max-width: $xl;
+  margin: 0 auto;
+}
+
+// GENERAL
+@for $i from 1 through $cols {
+  .col-#{$i} {
+    display: block;
+    float: left;
+    width: (100%/$cols*$i);
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 1px;
+    // min-height trick based on this tip by Chris Coyier:
+    // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+  }
+}
+
+// XXS
+@media screen and (min-width: $xxs) {
+  @for $i from 1 through $cols {
+    .xxs-col-#{$i} {
+      display: block;
+      float: left;
+      width: (100%/$cols*$i);
+      padding-left: 20px;
+      padding-right: 20px;
+      min-height: 1px;
+    }
+  }
+}
+
+// XS
+@media screen and (min-width: $xs) {
+  @for $i from 1 through $cols {
+    .xs-col-#{$i} {
+      display: block;
+      float: left;
+      width: (100%/$cols*$i);
+      padding-left: 20px;
+      padding-right: 20px;
+      min-height: 1px;
+    }
+  }
+}
+
+// S
+@media screen and (min-width: $s) {
+  @for $i from 1 through $cols {
+    .s-col-#{$i} {
+      display: block;
+      float: left;
+      width: (100%/$cols*$i);
+      padding-left: 20px;
+      padding-right: 20px;
+      min-height: 1px;
+    }
+  }
+}
+
+// M
+@media screen and (min-width: $m) {
+  @for $i from 1 through $cols {
+    .m-col-#{$i} {
+      display: block;
+      float: left;
+      width: (100%/$cols*$i);
+      padding-left: 20px;
+      padding-right: 20px;
+      min-height: 1px;
+    }
+  }
+}
+
+// L
+@media screen and (min-width: $l) {
+  @for $i from 1 through $cols {
+    .l-col-#{$i} {
+      display: block;
+      float: left;
+      width: (100%/$cols*$i);
+      padding-left: 20px;
+      padding-right: 20px;
+      min-height: 1px;
+    }
+  }
+}
+
+// XL
+@media screen and (min-width: $xl) {
+  @for $i from 1 through $cols {
+    .l-col-#{$i} {
+      display: block;
+      float: left;
+      width: (100%/$cols*$i);
+      padding-left: 20px;
+      padding-right: 20px;
+      min-height: 1px;
+    }
+  }
+}
+
+// HELPERS
+.pad {
+  padding-left: $gap;
+  padding-right: $gap;
+}
+
+.no-pad {
+  padding-left: 0;
+  padding-right: 0;
+}
+.alpha {
+  padding-left: 0;
+}
+.omega {
+  padding-right: 0;
+}
