@@ -1,133 +1,119 @@
 // GRID VARIABLES
 // Costumize yours, based on your projects needs
 $cols : 12;
-$gap  : 20px;
+$gap  : 15px;
 
 // BREAKPOINTS
-$xxs  : 320px;
-$xs   : 480px;
-$s    : 640px;
-$m    : 800px;
-$l    : 1000px;
 $xl   : 1100px;
+$l    : 1000px;
+$m    : 800px;
+$s    : 640px;
+$xs   : 480px;
+$xxs  : 320px;
+
+// NOW INSIDE AN ARRAY, FOR ITERATION
+$breakpoints: (
+	xxs  : $xxs,
+	xs   : $xs,
+	s    : $s,
+	m    : $m,
+	l    : $l,
+	xl   : $xl
+);
 
 .row {
-  @include clearfix;
-  max-width: $xl;
-  margin: 0 auto;
+	@include clearfix;
+	max-width: map-get($breakpoints, xl);
+	margin: 0 auto;
 }
 
-// GENERAL
+@mixin col {
+	display: block;
+	float: left;
+	min-height: 1px;
+	padding-left: $gap;
+	padding-right: $gap;
+}
+
+// WIDTH INDEPENDENT
 @for $i from 1 through $cols {
-  .col-#{$i} {
-    display: block;
-    float: left;
-    width: (100%/$cols*$i);
-    padding-left: 20px;
-    padding-right: 20px;
-    min-height: 1px;
-    // min-height trick based on this tip by Chris Coyier:
-    // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
-  }
+	
+	.col-#{$i} {
+		@include col;
+		width: (100%/$cols*$i);
+	}
+	.push-#{$i} {
+		margin-left: (100%/$cols*$i);
+	}
+	.pull-#{$i} {
+		margin-left: -(100%/$cols*$i);
+	}
 }
 
-// XXS
-@media screen and (min-width: $xxs) {
-  @for $i from 1 through $cols {
-    .xxs-col-#{$i} {
-      display: block;
-      float: left;
-      width: (100%/$cols*$i);
-      padding-left: 20px;
-      padding-right: 20px;
-      min-height: 1px;
-    }
-  }
+// GENERATE BREAKPOINTS, PUSHES AND PULLS
+@each $point, $resolution in $breakpoints {
+
+	@media screen and (max-width: #{$resolution}){
+
+		@for $i from $cols through 1 {
+			.#{$point}-col-#{$i} {
+				@include col;
+				width: (100%/$cols*$i);
+			}
+			.#{$point}-push-#{$i} {
+				margin-left: (100%/$cols*$i);
+			}
+			.#{$point}-pull-#{$i} {
+				margin-left: -(100%/$cols*$i);
+			}
+		}
+	}
 }
 
-// XS
-@media screen and (min-width: $xs) {
-  @for $i from 1 through $cols {
-    .xs-col-#{$i} {
-      display: block;
-      float: left;
-      width: (100%/$cols*$i);
-      padding-left: 20px;
-      padding-right: 20px;
-      min-height: 1px;
-    }
-  }
+// GENERATE MIXINS FOR QUICK ADJUSTMENT TO VARIOUS MEDIA QUERIES
+@mixin xl {
+	@media screen and (max-width: $xl) {
+		@content;
+	}
 }
-
-// S
-@media screen and (min-width: $s) {
-  @for $i from 1 through $cols {
-    .s-col-#{$i} {
-      display: block;
-      float: left;
-      width: (100%/$cols*$i);
-      padding-left: 20px;
-      padding-right: 20px;
-      min-height: 1px;
-    }
-  }
+@mixin l {
+	@media screen and (max-width: $l) {
+		@content;
+	}
 }
-
-// M
-@media screen and (min-width: $m) {
-  @for $i from 1 through $cols {
-    .m-col-#{$i} {
-      display: block;
-      float: left;
-      width: (100%/$cols*$i);
-      padding-left: 20px;
-      padding-right: 20px;
-      min-height: 1px;
-    }
-  }
+@mixin m {
+	@media screen and (max-width: $m) {
+		@content;
+	}
 }
-
-// L
-@media screen and (min-width: $l) {
-  @for $i from 1 through $cols {
-    .l-col-#{$i} {
-      display: block;
-      float: left;
-      width: (100%/$cols*$i);
-      padding-left: 20px;
-      padding-right: 20px;
-      min-height: 1px;
-    }
-  }
+@mixin s {
+	@media screen and (max-width: $s) {
+		@content;
+	}
 }
-
-// XL
-@media screen and (min-width: $xl) {
-  @for $i from 1 through $cols {
-    .l-col-#{$i} {
-      display: block;
-      float: left;
-      width: (100%/$cols*$i);
-      padding-left: 20px;
-      padding-right: 20px;
-      min-height: 1px;
-    }
-  }
+@mixin xs {
+	@media screen and (max-width: $xs) {
+		@content;
+	}
+}
+@mixin xxs {
+	@media screen and (max-width: $xxs) {
+		@content;
+	}
 }
 
 // HELPERS
 .pad {
-  padding-left: $gap;
-  padding-right: $gap;
+	padding-left: $gap;
+	padding-right: $gap;
 }
-
 .no-pad {
-  padding-left: 0;
-  padding-right: 0;
+	padding-left: 0;
+	padding-right: 0;
 }
 .alpha {
-  padding-left: 0;
+	padding-left: 0;
 }
 .omega {
-  padding-right: 0;
+	padding-right: 0;
 }
