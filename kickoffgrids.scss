@@ -1,9 +1,16 @@
+// ========================================
 // GRID VARIABLES
 // Costumize yours, based on your projects needs
+// ========================================
 $cols : 12;
 $gap  : 15px;
 
+// ========================================
 // BREAKPOINTS
+// Costumize yours
+// I like to abstract "mobile", "mobile landscape", "tablet", etc, into xxs, xs, s, m...
+// As more and more devices and form-factors join the market defining something with a simplistic becomes 
+// ========================================
 $xl   : 1100px;
 $l    : 1000px;
 $m    : 800px;
@@ -11,22 +18,23 @@ $s    : 640px;
 $xs   : 480px;
 $xxs  : 320px;
 
-// NOW INSIDE AN ARRAY, FOR ITERATION
+// ========================================
+// NOW INSIDE AN ARRAY/MAP
+// For itteration, later on
+// ========================================
 $breakpoints: (
-	xxs  : $xxs,
-	xs   : $xs,
-	s    : $s,
-	m    : $m,
+	xl   : $xl,
 	l    : $l,
-	xl   : $xl
+	m    : $m,
+	s    : $s,
+	xs   : $xs,
+	xxs  : $xxs
 );
-
 .row {
 	@include clearfix;
 	max-width: map-get($breakpoints, xl);
 	margin: 0 auto;
 }
-
 @mixin col {
 	display: block;
 	float: left;
@@ -35,9 +43,10 @@ $breakpoints: (
 	padding-right: $gap;
 }
 
-// WIDTH INDEPENDENT
+// ========================================
+// GENERAL, VIEWPORT WIDTH INDEPENDENT
+// ========================================
 @for $i from 1 through $cols {
-	
 	.col-#{$i} {
 		@include col;
 		width: (100%/$cols*$i);
@@ -50,12 +59,14 @@ $breakpoints: (
 	}
 }
 
+// ========================================
 // GENERATE BREAKPOINTS, PUSHES AND PULLS
+// ========================================
 @each $point, $resolution in $breakpoints {
 
 	@media screen and (max-width: #{$resolution}){
 
-		@for $i from $cols through 1 {
+		@for $i from 1 through $cols {
 			.#{$point}-col-#{$i} {
 				@include col;
 				width: (100%/$cols*$i);
@@ -66,11 +77,43 @@ $breakpoints: (
 			.#{$point}-pull-#{$i} {
 				margin-left: -(100%/$cols*$i);
 			}
+			.#{$point}-alpha {
+				padding-left: 0;
+			}
+			.#{$point}-omega {
+				padding-right: 0;
+			}
+			.#{$point}-no-pad {
+				padding-left: 0;
+				padding-right: 0;
+			}
+			.#{$point}-pad {
+				padding-left: $gap;
+				padding-right: $gap;
+			}
+			.#{$point}-no-push,
+			.#{$point}-no-pull {
+				margin-left: 0;
+			}
 		}
 	}
 }
 
-// GENERATE MIXINS FOR QUICK ADJUSTMENT TO VARIOUS MEDIA QUERIES
+// ========================================
+// GENERATE BREAKPOINT MIXINS
+// ========================================
+
+// This won't work... :(
+
+// @each $point, $resolution in $breakpoints {
+// 	@mixin #{$point} {
+// 		@media screen and (max-width: #{point}) {
+// 			@content;
+// 		}
+// 	}
+// }
+
+
 @mixin xl {
 	@media screen and (max-width: $xl) {
 		@content;
@@ -102,7 +145,9 @@ $breakpoints: (
 	}
 }
 
+// ========================================
 // HELPERS
+// ========================================
 .pad {
 	padding-left: $gap;
 	padding-right: $gap;
@@ -111,9 +156,5 @@ $breakpoints: (
 	padding-left: 0;
 	padding-right: 0;
 }
-.alpha {
-	padding-left: 0;
-}
-.omega {
-	padding-right: 0;
-}
+.alpha { padding-left: 0; }
+.omega { padding-right: 0; }
